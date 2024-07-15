@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Header-->
+<header class="banner-header container">
+    <img src="{%static 'assets\banners\Untitled.png ' %}" alt="Bannière" class="banner-img"
+        style="width: 85vw; margin: auto;">
+</header>
+<h3 style="text-align: center; font-style: italic; border: 2px solid black; padding: 10px; color :#B4B8A6">
+    Saisissez Vos Identifiants
+</h3>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3">
+
+            <br /><br />
+            <strong>Information de payement</strong>
+            <br /><br />
+            <form method="POST" action="{% url 'update_info' %}">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                <br /><br />
+                <strong>Information de Livraison</strong>
+                <br /><br />
+
+                {{ shipping_form.as_p }}
+
+
+                <br /><br />
+                <button type="submit" class="btn btn-secondary">
+                    Changer de Profile
+                </button>
+            </form>
+
+            <br /><br />
+
+
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

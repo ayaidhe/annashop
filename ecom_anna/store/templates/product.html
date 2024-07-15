@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="container">
+    <br />
+
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <center>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <br />
+                        <p class="card-text justified">{{ product.description }}</p>
+
+                        <!-- Affichage de la notation en étoile -->
+                        <p style="border-bottom: 1px solid black;">Merci de noter ce produit</p>
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" />
+                            <label for="star5" title="5 étoiles"></label>
+                            <input type="radio" id="star4" name="rating" value="4" />
+                            <label for="star4" title="4 étoiles"></label>
+                            <input type="radio" id="star3" name="rating" value="3" />
+                            <label for="star3" title="3 étoiles"></label>
+                            <input type="radio" id="star2" name="rating" value="2" />
+                            <label for="star2" title="2 étoiles"></label>
+                            <input type="radio" id="star1" name="rating" value="1" />
+                            <label for="star1" title="1 étoile"></label>
+                        </div>
+                        {% if product.is_sale %}
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+                            <div class="bi-star-fill"></div>
+                        </div>
+
+                        <!-- Product price-->
+                        <strike>
+                            MAD{{ product.price }}
+                        </strike>
+                        &nbsp;
+                        MAD{{ product.sale_price }}
+
+                        {% else %}
+                        <p>Prix: {{ product.price }} MAD</p>
+
+                        {% endif %}
+                        <br /><br />
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">Quantité:</div>
+                            <div class="col-md-2">
+                                <select class="form-select form-select-sm" id="qty-cart">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br /><br />
+
+
+                        <a href="{% url 'home'%}" class="btn btn-secondary">Accueil</a>
+                        <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Ajouter
+                            Au
+                            Pannier</button>
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+<script>
+    // Check if button pressed
+    $(document).on('click', '#add-cart', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: $('#add-cart').val(),
+                product_qty: $('#qty-cart option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function (json) {
+                //console.log(json)
+                document.getElementById("cart_quantity").textContent = json.qty
+                location.reload();
+            },
+
+            error: function (xhr, errmsg, err) {
+
+            }
+
+
+        });
+
+
+
+    })
+
+
+
+
+</script>
+
+<!-- la tra mouchkil nhayd hadii -->
+
+<script>
+    // Check if button pressed
+    $(document).on('click', '#add-cart', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_add' %}',
+            data: {
+                product_id: $('#add-cart').val(),
+                product_qty: $('#qty-cart option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function (json) {
+                //console.log(json)
+                document.getElementById("cart_quantity").textContent = json.qty
+                location.reload();
+            },
+
+            error: function (xhr, errmsg, err) {
+
+            }
+        });
+    });
+</script>
+
+<style>
+    .rating {
+        display: inline-block;
+        unicode-bidi: bidi-override;
+        direction: rtl;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        width: 26px;
+        height: 26px;
+        margin: 0;
+        padding: 0;
+        float: right;
+    }
+
+    .rating label:before {
+        content: '\2605';
+        font-size: 24px;
+        color: #ccc;
+    }
+
+    .rating input:checked~label:before,
+    .rating label:hover~label:before {
+        color: black;
+    }
+</style>
+
+{% endblock %}

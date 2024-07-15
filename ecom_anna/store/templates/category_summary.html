@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Header-->
+<header class="banner-header container">
+    <img src="{%static 'assets\banners\Untitled.png ' %}" alt="Bannière" class="banner-img"
+        style="width: 85vw; margin: auto;">
+</header>
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+                <br /><br />
+
+                {% for category in categories %}
+                <h3><a href="{% url 'category' category %}">{{ category }}</a></h3>
+
+                {% endfor %}
+                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
+        </center>
+    </div>
+</div>
+
+{% endblock %}

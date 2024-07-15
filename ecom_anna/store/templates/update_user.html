@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<!-- Header-->
+<!-- Header-->
+<header class="banner-header container">
+    <img src="{%static 'assets\banners\Untitled.png ' %}" alt="Bannière" class="banner-img"
+        style="width: 85vw; margin: auto;">
+</header>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3">
+
+            <br /><br />
+            <form method="POST" action="{% url 'update_user' %}">
+                {% csrf_token %}
+
+                {{ user_form.as_p }}
+                <br /><br />
+                <button type="submit" class="btn btn-secondary">
+                    Update Profile
+                </button>
+            </form>
+
+            <br /><br />
+            <a href="{% url 'update_password' %}" class="btn btn-secondary">Changer le Mot de Passe</a>
+
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

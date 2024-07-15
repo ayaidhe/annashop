@@ -1,0 +1,159 @@
+{% load static %}
+
+<!-- Bannière d'annonce -->
+<div class="announcement-bar">
+    <i class="fas fa-truck truck-icon"></i>
+    Livraison offerte dès 1000 Dhs d'achat
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container px-4 px-lg-5">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'assets/banners/test.png' %}" alt="Logo InstaShop" class="logo">
+        </a>
+        <!-- Fin du Logo -->
+
+        <!-- Navigation -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">
+                        <i class="fas fa-home nav-icon"></i>
+                        Accueil
+                    </a>
+                </li>
+
+                <li class="nav-item" style="display: flex; align-items: center;">
+                    <a class="nav-link active" aria-current="page" href="{% url 'search' %}"
+                        style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-search" style="margin-right: 8px;"></i>
+                        Chercher
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        <i class="fas fa-info-circle nav-icon"></i>
+                        A propos
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'update_user' %}">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                        </li>
+                        <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'update_info' %}">Vos infos</a></li>
+            </ul>
+            </li>
+
+            {% if user.is_superuser %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownOrders" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Comm_D</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrders">
+                    <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Commande Livrées</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Commande En cours</a></li>
+                </ul>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">
+                    <i class="fas fa-sign-out-alt"></i> Se déconnecter
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">
+                    <i class="fas fa-sign-in-alt"></i> Se Connecter
+                </a>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Créer un Compte</a></li>
+            {% endif %}
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownCategories" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Catégories</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                    <li><a class="dropdown-item" href="{% url 'category_summary' %}">Tous les produits</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'Sac' %}">Sac</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'Montres' %}">Horlogerie</a></li>
+                    <li><a class="dropdown-item" href="{% url 'category' 'Parfums et Brumes' %}">Parfums et
+                            Brumes</a></li>
+                </ul>
+            </li>
+            </ul>
+            <form class="d-flex">
+                <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+                    <i class="bi-cart-fill me-1"></i> Panier d'achat
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">{{ cart|length }}</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<style>
+    /* Bannière d'annonce */
+    .announcement-bar {
+        background-color: #B4B8A6;
+        color: black;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    /* Style du logo */
+    .navbar-brand .logo {
+        height: 40px;
+        width: auto;
+    }
+
+    /* Style de la barre de navigation */
+    .navbar {
+        border-bottom: 2px solid #ddd;
+    }
+
+    /*hada li zdt */
+    .truck-icon {
+        margin-right: 10px;
+        position: relative;
+        animation: moveTruck 10s linear infinite;
+    }
+
+    @keyframes moveTruck {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        50% {
+            transform: translateX(calc(100% + 50px));
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+</style>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>

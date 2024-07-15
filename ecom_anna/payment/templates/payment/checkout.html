@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% load static %}
+<!-- Header-->
+<!-- Header-->
+<header class="banner-header container">
+    <img src="{%static 'assets\banners\Untitled.png ' %}" alt="Bannière" class="banner-img"
+        style="width: 85vw; margin: auto;">
+</header>
+<h3 style="text-align: center; font-style: italic; border: 2px solid black; padding: 10px; color :#B4B8A6">
+    Vottre commande
+</h3>
+<br />
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Récapitulatif de la commande
+                </div>
+                <div class="card-body">
+                    {% for product in cart_products %}
+                    {{ product.name }}:
+                    {% if product.is_sale %}
+                    {{ product.sale_price }}MAD
+                    {% else %}
+                    {{ product.price }}MAD
+                    {% endif %}
+
+                    <br />
+                    <small>Quantité:
+                        {% for key, value in quantities.items %}
+                        {% if key == product.id|slugify %}
+                        {{ value }}
+                        {% endif %}
+                        {% endfor %}</small>
+                    <br /><br />
+
+                    {% endfor %}
+                    Total: MAD{{ totals }}
+                    <br /><br />
+                    <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">Mettre à jour les
+                        éléments</a>
+                </div>
+            </div>
+            <br /><br />
+            <div class="card">
+                <div class="card-header">
+                    Information de Livraison
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'billing_info' %}">
+                        {% csrf_token %}
+                        {{ shipping_form.as_p }}
+
+                </div>
+            </div>
+            <br />
+
+            <button type="submit" class="btn btn-secondary">
+                Passer Au Paiement
+            </button>
+
+            </form>
+            <br /><br />
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

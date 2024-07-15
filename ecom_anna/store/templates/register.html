@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Header-->
+<header class="banner-header container">
+    <img src="{%static 'assets\banners\Untitled.png ' %}" alt="Bannière" class="banner-img"
+        style="width: 85vw; margin: auto;">
+</header>
+<h3 style="text-align: center; font-style: italic; border: 2px solid black; padding: 10px; color :#B4B8A6">
+    Saisissez vos informations
+</h3>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6 offset-md-3">
+
+            <br /><br />
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                <br /><br />
+                <button type="submit" class="btn btn-secondary">
+                    Créer un Compte
+                </button>
+
+            </form>
+
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+            <br /><br />
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
