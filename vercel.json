@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "ECOM_ANNA/wsgi.py",
+            "src": "annashop/wsgi.py",
             "use": "@vercel/python",
             "config": {
                 "maxLambdaSize": "15mb",
@@ -12,7 +12,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "ECOM_ANNA/wsgi.py"
+            "dest": "annashop/wsgi.py"
         }
     ]
 }
